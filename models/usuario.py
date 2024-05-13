@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 from models.roles import RolesModel
 from sql import session, Base
 
@@ -12,6 +13,8 @@ class UsuarioModel(Base):
     senha = Column(String, nullable=True)
     aluno = Column(Boolean, nullable=True)
     role_id = Column(Integer, ForeignKey('roles.role_id'))
+    curriculo = relationship('CurriculoModel', backref='curriculo', lazy=True)
+
 
     def __init__(self, nome, email, cpf, senha, aluno, role_id):
         self.nome = nome
