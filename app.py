@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_restful import Api
 from resource.usuario import Usuario, UsuarioRegistro
-from resource.curriculo import Curriculo, CurriculoRegistro
+from resource.curriculo import Curriculo, CurriculoRegistro, Curriculos
 from models.roles import RolesModel
 from resource.roles import Roles
 from sql import engine, Base
@@ -17,6 +17,7 @@ api.add_resource(Roles, '/roles')
 api.add_resource(Usuario, '/usuario/<int:usuario_id>')
 api.add_resource(UsuarioRegistro, '/usuario')
 #Curriculos
+api.add_resource(Curriculos, '/curriculos')
 api.add_resource(Curriculo, '/curriculo/<int:curriculo_id>')
 api.add_resource(CurriculoRegistro, '/curriculo')
 
