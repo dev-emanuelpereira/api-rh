@@ -13,6 +13,7 @@ body.add_argument('area_atuacao', type=str, required=True, help="O campo 'AREA D
 class Curriculos(Resource):
     def get(self):
         return {'curriculos' : CurriculoModel.find_all()}
+    
 class Curriculo(Resource):
     def get(self, curriculo_id):
         curriculo = CurriculoModel.find_curriculo(curriculo_id)

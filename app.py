@@ -1,8 +1,8 @@
-import os
 from flask import Flask
 from flask_restful import Api
 from resource.usuario import Usuario, UsuarioRegistro
 from resource.curriculo import Curriculo, CurriculoRegistro, Curriculos
+from resource.vagas import Vagas
 from models.roles import RolesModel
 from resource.roles import Roles
 from sql import engine, Base
@@ -20,7 +20,8 @@ api.add_resource(UsuarioRegistro, '/usuario')
 api.add_resource(Curriculos, '/curriculos')
 api.add_resource(Curriculo, '/curriculo/<int:curriculo_id>')
 api.add_resource(CurriculoRegistro, '/curriculo')
-
+#Vagas
+api.add_resource(Vagas, '/vagas')
 @app.before_request
 def criar_banco():
     Base.metadata.create_all(engine)
