@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from models.roles import RolesModel
+from models.curriculo import CurriculoModel
 from sql import session, Base
 
 class UsuarioModel(Base): 
@@ -25,14 +26,22 @@ class UsuarioModel(Base):
         self.role_id = role_id
 
     def json(self):
-            
+            if self.aluno and self.curriculo:
+                return {
+                    'usuario_id' : self.usuario_id,
+                    'email' : self.email,
+                    'cpf' : self.cpf,
+                    'aluno' : self.aluno,
+                    'role' : session.query(RolesModel).filter_by(role_id=self.role_id).first().json(),
+                    'curriculo' : session.query(CurriculoModel).filter_by(usuario_id=self.usuario_id).first().json()
+                }
             return {
-                'usuario_id' : self.usuario_id,
-                'email' : self.email,
-                'cpf' : self.cpf,
-                'aluno' : self.aluno,
-                'role' : session.query(RolesModel).filter_by(role_id=self.role_id).first().json()
-            }
+                    'usuario_id' : self.usuario_id,
+                    'email' : self.email,
+                    'cpf' : self.cpf,
+                    'aluno' : self.aluno,
+                    'role' : session.query(RolesModel).filter_by(role_id=self.role_id).first().json()
+                }
      
     def find_user(usuario_id):
         usuario = session.query(UsuarioModel).filter_by(usuario_id=usuario_id).first()

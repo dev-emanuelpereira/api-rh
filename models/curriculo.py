@@ -1,9 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sql import session, Base
 
-
-
-
 class CurriculoModel(Base): 
     __tablename__ = 'curriculos'
 
@@ -20,7 +17,6 @@ class CurriculoModel(Base):
         self.usuario_id = usuario_id
 
     def json(self):
-            
             return {
                 'usuario_id' : self.usuario_id,
                 'curriculo_id': self.curriculo_id,
@@ -29,6 +25,12 @@ class CurriculoModel(Base):
                 'area_atuacao': self.area_atuacao
             }
      
+    def find_curriculo(curriculo_id):
+        curriculo = session.query(CurriculoModel).filter_by(curriculo_id=curriculo_id).first()
+        if curriculo:
+            return curriculo
+        return None
+    
     def find_curriculo_by_user(usuario_id):
         curriculo = session.query(CurriculoModel).filter_by(usuario_id=usuario_id).first()
         if curriculo:
