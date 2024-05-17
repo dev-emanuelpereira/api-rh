@@ -2,7 +2,6 @@ from flask_restful import Resource, reqparse
 from flask import request
 from models.vagas import VagasModel
 from models.usuario import UsuarioModel
-import json
 
 body = reqparse.RequestParser()
 body.add_argument('nome_vaga', type=str, required=True, help="O campo 'NOME VAGA' nao deve ser deixa em branco")
@@ -21,7 +20,9 @@ class Vaga(Resource):
         if not UsuarioModel.find_user(usuario_id):
             return {'message' : 'Esse usuario nao existe'}
         vaga = VagasModel.find_vagas_by_user(usuario_id)
-        return vaga, 200
+        if vaga:
+            return vaga, 200
+        return {'message' : 'Este usuario nao criou vagas'}
 
 
 class VagaRegistro(Resource):

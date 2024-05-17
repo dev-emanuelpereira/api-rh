@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import relationship
 from models.usuario import UsuarioModel
-import json
 from sql import session, Base
 
 
@@ -41,7 +39,7 @@ class VagasModel(Base):
         
         if len(vagas_por_usuario['vagas_criadas']) != 0:
             return vagas_por_usuario
-        return {'message' : 'Este usuario nao criou vagas'}
+        return None
     
     def find_all():
         usuarios = session.query(UsuarioModel).all()

@@ -3,8 +3,9 @@ from flask_restful import Api
 from resource.usuario import Usuario, UsuarioRegistro
 from resource.curriculo import Curriculo, CurriculoRegistro, Curriculos
 from resource.vagas import Vagas, VagaRegistro, Vaga
-from models.roles import RolesModel
 from resource.roles import Roles
+from resource.candidato import Candidato
+from models.roles import RolesModel
 from sql import engine, Base
 
 app = Flask(__name__)
@@ -24,6 +25,8 @@ api.add_resource(CurriculoRegistro, '/curriculo')
 api.add_resource(Vagas, '/vagas')
 api.add_resource(VagaRegistro, '/vaga')
 api.add_resource(Vaga, '/vaga')
+#Candidatar-se
+api.add_resource(Candidato, '/candidato')
 
 @app.before_request
 def criar_banco():
