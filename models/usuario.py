@@ -15,6 +15,7 @@ class UsuarioModel(Base):
     aluno = Column(Boolean, nullable=True)
     role_id = Column(Integer, ForeignKey('roles.role_id'))
     curriculo = relationship('CurriculoModel', backref='curriculo', lazy=True)
+    vagas = relationship('VagasModel', backref='usuario', lazy=True)
 
 
     def __init__(self, nome, email, cpf, senha, aluno, role_id):
