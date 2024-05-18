@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Resource, reqparse
 from models.usuario import UsuarioModel
 from secrets import compare_digest
@@ -13,8 +14,9 @@ body.add_argument('confirmar_senha', type=str, required=True, help="O campo 'CON
 body.add_argument('aluno', type=bool, required=True, help="Você deve colocar se é um aluno ou nao")
 
 class Usuario(Resource):
-    def get(self, usuario_id):
-        usuario = UsuarioModel.find_user(usuario_id)
+    def get(self):
+        usuario_id = request.args.get('usuario_id')
+        usuario = UsuarioModel.find_by_id(usuario_id)
         if usuario:
             return usuario.json()
         return {'message' : 'Usuario nao encontrado'}, 404
@@ -41,3 +43,23 @@ class UsuarioRegistro(Resource):
 
             
         return {'message' : 'As senhas nao coincidem'}, 400
+    
+    def put(self):
+        dados = body.parse_args()
+        del dados['confirmar_senha']
+        usuario_id = request.args.get('usuario_id')
+
+        usuario_encontrada = UsuarioModel.find_by_id(usuario_id)
+        if usuario_encontrada:
+            usuario_encontrada.update(**dados)
+            usuario_encontrada.save()
+            return usuario_encontrada.json(), 200
+        
+    def delete(self):
+        usuario_id = request.args.get('usuario_id')
+        usuario_encontrada = UsuarioModel.find_by_id(usuario_id)
+
+        if usuario_encontrada:
+            usuario_encontrada.delete()
+            return {'message' : 'Usuario deletado com sucesso'}, 200
+        return {'message' : 'Nenhum usuario foi encontrado'}, 404

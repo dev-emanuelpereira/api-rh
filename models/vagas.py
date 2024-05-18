@@ -41,6 +41,12 @@ class VagasModel(Base):
             return vagas_por_usuario
         return None
     
+    def find_vagas_by_id(vaga_id):
+        vaga = session.query(VagasModel).filter_by(vaga_id=vaga_id).first()
+        if vaga:
+            return vaga
+        return None
+    
     def find_all():
         usuarios = session.query(UsuarioModel).all()
         vagas = []
@@ -57,5 +63,21 @@ class VagasModel(Base):
         
 
     def save(self):
-        session.add(self)
-        session.commit()
+        try:
+            session.add(self)
+            session.commit()
+        except:
+            return {'message' : 'Nao foi possivel salvar a vaga'}, 500
+        
+    def update(self, nome_vaga, descricao, requisito_formacao, salario):
+        self.nome_vaga = nome_vaga
+        self.descricao = descricao
+        self.requisito_formacao = requisito_formacao
+        self.salario = salario
+        
+    def delete(self):
+        try:
+            session.delete(self)
+            session.commit()
+        except:
+            return {'message' : 'Nao foi possivel deletar a vaga'}, 500

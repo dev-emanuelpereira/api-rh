@@ -33,6 +33,25 @@ class VagaRegistro(Resource):
         vaga = VagasModel(**dados, usuario_id=usuario_id)
         vaga.save()
         return vaga.json(), 201
+    
+    def put(self):
+        dados = body.parse_args()
+        vaga_id = request.args.get('vaga_id')
+
+        vaga_encontrada = VagasModel.find_vagas_by_id(vaga_id)
+        if vaga_encontrada:
+            vaga_encontrada.update(**dados)
+            vaga_encontrada.save()
+            return vaga_encontrada.json(), 200
+        
+    def delete(self):
+        vaga_id = request.args.get('vaga_id')
+        vaga_encontrada = VagasModel.find_vagas_by_id(vaga_id)
+
+        if vaga_encontrada:
+            vaga_encontrada.delete()
+            return {'message' : 'Vaga deletada com sucesso'}, 200
+        return {'message' : 'Nenhuma vaga foi encontrada'}, 404
 
 
     

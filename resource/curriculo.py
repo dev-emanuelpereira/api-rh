@@ -34,3 +34,22 @@ class CurriculoRegistro(Resource):
             curriculo.save()
             return curriculo.json, 200
         return {"message" : "Nao existe um usuario com esse ID"}, 400
+    
+    def put(self):
+        dados = body.parse_args()
+        curriculo_id = request.args.get('curriculo_id')
+
+        curriculo_encontrada = CurriculoModel.find_curriculo(curriculo_id)
+        if curriculo_encontrada:
+            curriculo_encontrada.update(**dados)
+            curriculo_encontrada.save()
+            return curriculo_encontrada.json(), 200
+        
+    def delete(self):
+        curriculo_id = request.args.get('curriculo_id')
+        curriculo_encontrada = CurriculoModel.find_curriculo(curriculo_id)
+
+        if curriculo_encontrada:
+            curriculo_encontrada.delete()
+            return {'message' : 'Candidatura cancelada com sucesso'}, 200
+        return {'message' : 'Nenhuma candidatura foi encontrada'}, 404
