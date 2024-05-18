@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sql import session, Base
 
 class CurriculoModel(Base): 
@@ -48,4 +48,16 @@ class CurriculoModel(Base):
             session.add(self)
             session.commit()
         except:
-            return {"message" : "Erro ao salvar no banco de dados"}
+            return {"message" : "Erro ao salvar no banco de dados"}, 500
+        
+    def update(self, nome, formacao, area_atuacao):
+        self.nome = nome
+        self.formacao = formacao
+        self.area_atuacao = area_atuacao
+
+    def delete(self):
+        try:
+            session.delete(self)
+            session.commit()
+        except:
+            return {'message' : 'Nao foi possivel deletar o curriculo'}, 500

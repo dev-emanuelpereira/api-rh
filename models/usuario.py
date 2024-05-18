@@ -15,6 +15,7 @@ class UsuarioModel(Base):
     aluno = Column(Boolean, nullable=True)
     role_id = Column(Integer, ForeignKey('roles.role_id'))
     curriculo = relationship('CurriculoModel', backref='curriculo', lazy=True)
+    vagas = relationship('VagasModel', backref='usuario', lazy=True)
 
 
     def __init__(self, nome, email, cpf, senha, aluno, role_id):
@@ -55,9 +56,31 @@ class UsuarioModel(Base):
             return usuario
         return None
     
+    def find_by_id(usuario_id):
+        usuario = session.query(UsuarioModel).filter_by(usuario_id=usuario_id).first()
+        if usuario:
+            return usuario
+        return None
+    
     def save(self):
-        session.add(self)
-        session.commit()
+        try:
+            session.add(self)
+            session.commit()
+        except:
+            return {'message' : 'Nao foi possivel salvar o usuario'}, 500
+        
+    def update(self, nome, email, cpf, senha, aluno):
+        self.nome = nome
+        self.email = email
+        self.cpf = cpf
+        self.senha = senha
+
+    def delete(self):
+        try:
+            session.delete(self)
+            session.commit()
+        except:
+            return {'message' : 'Nao foi possivel deletar o usuario'}, 500
 
     def valida_cpf(cpf):
         cpf = ''.join(filter(str.isdigit, cpf))

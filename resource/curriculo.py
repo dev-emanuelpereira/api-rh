@@ -12,13 +12,13 @@ body.add_argument('area_atuacao', type=str, required=True, help="O campo 'AREA D
 
 class Curriculos(Resource):
     def get(self):
-        return {'curriculos' : CurriculoModel.find_all()}
+        return {'curriculos' : CurriculoModel.find_all()}, 200
     
 class Curriculo(Resource):
     def get(self, curriculo_id):
         curriculo = CurriculoModel.find_curriculo(curriculo_id)
         if curriculo:
-            return curriculo.json()
+            return curriculo.json(), 200
         return {'message' : 'Curriculo nao encontrado'}, 404
 
 class CurriculoRegistro(Resource):
@@ -32,5 +32,24 @@ class CurriculoRegistro(Resource):
 
             curriculo = CurriculoModel(**dados, usuario_id=usuario_id)
             curriculo.save()
-            return curriculo.json()
-        return {"message" : "Nao existe um usuario com esse ID"}
+            return curriculo.json, 200
+        return {"message" : "Nao existe um usuario com esse ID"}, 400
+    
+    def put(self):
+        dados = body.parse_args()
+        curriculo_id = request.args.get('curriculo_id')
+
+        curriculo_encontrada = CurriculoModel.find_curriculo(curriculo_id)
+        if curriculo_encontrada:
+            curriculo_encontrada.update(**dados)
+            curriculo_encontrada.save()
+            return curriculo_encontrada.json(), 200
+        
+    def delete(self):
+        curriculo_id = request.args.get('curriculo_id')
+        curriculo_encontrada = CurriculoModel.find_curriculo(curriculo_id)
+
+        if curriculo_encontrada:
+            curriculo_encontrada.delete()
+            return {'message' : 'Candidatura cancelada com sucesso'}, 200
+        return {'message' : 'Nenhuma candidatura foi encontrada'}, 404
