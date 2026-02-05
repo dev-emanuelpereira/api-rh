@@ -1,28 +1,49 @@
-# API RH
+# API RH – Sistema de Recrutamento e Seleção
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+API REST desenvolvida em **Python** com o objetivo de simular um **sistema de RH**, permitindo o gerenciamento de usuários, vagas de emprego, currículos e candidaturas.  
+O projeto foi criado com foco em **boas práticas de APIs REST**, **organização de código** e **regras de negócio**.
 
-## Introdução
+---
 
-API responsável para cadastrar usuários, vagas de emprego e curriculos. É possível também candidatar usuários e currículos nas vagas criadas. 
-## Índice
+## Visão Geral
 
-- [Introdução](#introdução)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [Uso](#uso)
-- [Endpoints](#endpoints)
-- [Exemplos](#exemplos)
+A API possibilita o cadastro de usuários, criação de vagas de emprego, registro de currículos e candidatura de usuários às vagas disponíveis.
 
-## Instalação
+O projeto tem caráter **educacional** e foi desenvolvido para consolidar conhecimentos em desenvolvimento backend, modelagem de dados e comunicação via HTTP.
+
+---
+
+## Tecnologias Utilizadas
+
+- **Python 3.12**
+- **Flask**
+- **API REST**
+- **Virtual Environment (venv)**
+- **JSON para troca de dados**
+
+---
+
+## Funcionalidades
+
+- Cadastro e gerenciamento de usuários
+- Criação e gerenciamento de vagas de emprego
+- Cadastro e atualização de currículos
+- Candidatura de usuários a vagas
+- Consulta de permissões (roles)
+- Validação básica de dados
+
+---
+
+## Instalação e Execução
 
 ### Pré-requisitos
 
-Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
-- [Python](https://nodejs.org/) v3.12 ou superior
+- [Python](https://www.python.org/) 3.12 ou superior
+- pip
 
-### Passos para Instalação
+### Passo a passo
 
 1. Clone o repositório:
     ```bash
@@ -35,14 +56,22 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
     cd ambvir
     Scripts\activate
     ```
-2. Instale as dependências:
+3. Instale as dependências:
     ```bash
     pip install -r requirements.txt
     ```
 
-## Configuração
+4. Inicie o servidor:
+```bash
+python app.py
+```
 
-### Requisições
+A aplicação estará disponível em:
+```bash
+http://127.0.0.1:5000
+```
+
+## Configuração
 
 Para as requisições HTTP utilize as seguintes variáveis:
 
@@ -50,12 +79,8 @@ Para as requisições HTTP utilize as seguintes variáveis:
 PORT=5000
 BASEURL=http://127.0.0.1
 ```
-## Uso
-Para iniciar o servidor de desenvolvimento, execute na raiz do projeto:
+---
 
-```bash
-python app.py
-```
 ## Endpoints
 
 ### Visão Geral
@@ -99,7 +124,6 @@ python app.py
 | **DELETE** | /candidato | Exclui a candidatura por vaga e usuario        |
 
 ## Exemplo de requisições
-
 
 ### Usuario
 #### POST /usuario
@@ -202,3 +226,7 @@ Body
     "vaga_id" : vaga_id,
 }
 ```
+---
+## Autor
+### Emanuel Pereira
+- *GitHub:* https://github.com/dev-emanuelpereira
